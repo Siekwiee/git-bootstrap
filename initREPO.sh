@@ -19,7 +19,7 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   echo "[i] Git repo detected."
 else
   echo "[i] Initializing new git repository..."
-  git init -b main
+  git init -b "$BRANCH"
 fi
 
 # Ensure a default branch exists and is the name we want
@@ -45,7 +45,7 @@ if [[ "$current_branch" == "HEAD" || -z "$current_branch" || "$current_branch" =
 
   # Switch to desired branch if not already on it
   if [[ "$(git rev-parse --abbrev-ref HEAD)" != "$BRANCH" ]]; then
-    git checkout "$BRANCH" 2>/dev/null || git switch "$BRANCH"
+    git checkout "$BRANCH" 2>/dev/null || git switch -c "$BRANCH"
   fi
 
   # Set default branch name for new repos
